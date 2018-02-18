@@ -1,0 +1,1 @@
+web: java -jar target/maven-repository-version-1.0.jar
