@@ -4,13 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
+<meta name="description"
+	content="Find the latest verison of any maven repository using group-id and artifact-id">
 <meta name="author" content="Amar Prakash Pandey">
 <title>Maven Repository Version</title>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Cousine"
+	rel="stylesheet">
 <link href="./stylesheets/main.css" rel="stylesheet">
 </head>
 
@@ -26,25 +28,13 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Project name</a>
+				<a class="navbar-brand" href="#">Maven Repository Version</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="#home">Home</a></li>
 					<li><a href="#about">About</a></li>
 					<li><a href="#contact">Contact</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Dropdown <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li role="separator" class="divider"></li>
-							<li class="dropdown-header">Nav header</li>
-							<li><a href="#">Separated link</a></li>
-							<li><a href="#">One more separated link</a></li>
-						</ul></li>
 				</ul>
 			</div>
 		</div>
@@ -52,22 +42,27 @@
 
 	<div class="container">
 		<div class="page-header">
-			<h1>Sticky footer with fixed navbar</h1>
+			<h2>
+				PASTE YOUR
+				<code>POM.XML</code>
+				CODE BELOW:
+			</h2>
 		</div>
-		<p class="lead">
-			Pin a fixed-height footer to the bottom of the viewport in desktop
-			browsers with this custom HTML and CSS. A fixed navbar has been added
-			with
-			<code>padding-top: 60px;</code>
-			on the
-			<code>body &gt; .container</code>
-			.
-		</p>
+		<form method="POST" action="">
+			<div id="editor"></div>
+			<div class="form-group margin-top-10px">
+				<button type="submit" class="btn btn-primary">GENERATE POM!</button>
+			</div>
+		</form>
 	</div>
 
 	<footer class="footer">
 		<div class="container">
-			<p class="text-muted">Place sticky footer content here.</p>
+			<p class="text-muted text-center">
+				&copy; 2017 Amar Prakash Pandey | <a href="http://amarpandey.me">Website</a>
+				| <a href="https://github.com/amarlearning/maven-repository-version">Source
+					Code</a>
+			</p>
 		</div>
 	</footer>
 
@@ -78,6 +73,14 @@
 				|| document
 						.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js"
+		type="text/javascript" charset="utf-8"></script>
+	<script>
+		var editor = ace.edit("editor");
+		editor.setTheme("ace/theme/monokai");
+		editor.session.setMode("ace/mode/xml");
+	</script>
 </body>
 </html>
