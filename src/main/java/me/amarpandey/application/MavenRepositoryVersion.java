@@ -1,4 +1,4 @@
-package com.example.application;
+package me.amarpandey.application;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.example.service.Constants;
+import me.amarpandey.service.Constants;
 
 public class MavenRepositoryVersion {
 

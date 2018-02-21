@@ -1,4 +1,4 @@
-package com.example.service;
+package me.amarpandey.service;
 
 public class Constants {
 
