@@ -8,22 +8,17 @@
 	editor.setTheme("ace/theme/monokai");
 	editor.session.setMode("ace/mode/xml");
 
-	/*$("#submitXML").submit(function() {
-
-		var xmlText = new XMLSerializer().serializeToString(editor.getValue());
-
-		$("input[name=xmlData]").val(xmlText);
-		alert($("input[name=xmlData]").val());
-		console.log($("input[name=xmlData]").val());
-	});*/
-
-	$("#submitXML").submit(function() {
-		alert("new y");
-		$.post("/submitXML", {
-			'data' : editor.getValue()
-		}, function(data) {
-			console.log("Data is : " + data);
+	$("#submit").click(function(){
+		$.ajax({
+			url : "/submitXML",
+			type : "POST",
+			data : editor.getValue(),
+			contentType : "application/xml; charset=utf-8",
+			dataType : "xml",
+			success : function(data) {
+				editor.setValue("Hello World", -1)
+			}
 		});
 	});
 
-})();
+})(); 
