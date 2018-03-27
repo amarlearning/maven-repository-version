@@ -1,4 +1,4 @@
-package me.amarpandey.service;
+package me.amarpandey.utils;
 
 public class Constants {
 

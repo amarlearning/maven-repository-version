@@ -7,7 +7,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import me.amarpandey.service.Constants;
+import me.amarpandey.utils.Constants;
 
 public class MavenRepositoryVersion {
 
