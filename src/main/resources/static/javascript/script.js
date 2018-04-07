@@ -8,10 +8,12 @@
 	editor.setTheme("ace/theme/monokai");
 	editor.session.setMode("ace/mode/xml");
 
-	$(".error-hide").hide();
-	$(".success-hide").hide();
-	
-	$("#submit").click(function(){
+	hideDisplayMessage();
+
+	$("#submit").click(function() {
+
+		hideDisplayMessage();
+
 		$.ajax({
 			url : "/submitXML",
 			type : "POST",
@@ -22,10 +24,15 @@
 				$(".success-hide").show();
 				editor.setValue(new XMLSerializer().serializeToString(data));
 			},
-			error: function (error) {
+			error : function(error) {
 				$(".error-hide").show();
 			}
 		});
 	});
 
-})(); 
+	function hideDisplayMessage() {
+		$(".error-hide").hide();
+		$(".success-hide").hide();
+	}
+
+})();
