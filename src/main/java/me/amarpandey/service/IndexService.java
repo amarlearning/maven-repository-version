@@ -1,70 +1,93 @@
 package me.amarpandey.service;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
+import org.apache.maven.model.Dependency;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+
+import me.amarpandey.utils.Constants;
 
 @Service
 public class IndexService {
 
-	public String submitXML(String xmlData) {
+  public String submitXML(String xmlData) {
 
-		Document parse = null;
-		DocumentBuilder db = null;
-		DocumentBuilder newDocumentBuilder = null;
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    Model model = null;
+    StringWriter writer = new StringWriter();
+    Reader reader = new StringReader(xmlData);
+    MavenXpp3Reader xpp3Reader = new MavenXpp3Reader();
 
-		// Parsing Method : One
+    try {
+      model = xpp3Reader.read(reader);
+    } catch (IOException | XmlPullParserException e) {
+      e.printStackTrace();
+    }
 
-		try {
-			newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
+    List<Dependency> dependencyList = model.getDependencies();
 
-		try {
-			parse = newDocumentBuilder.parse(new ByteArrayInputStream(xmlData.getBytes()));
-		} catch (SAXException | IOException e1) {
-			e1.printStackTrace();
-		}
+    for (int i = 0; i < dependencyList.size(); i++) {
 
-		System.out.println("Way one : " + parse);
-		System.out.println("Way one : " + parse.getFirstChild());
-		System.out.println("Way one : " + parse.getFirstChild().getFirstChild());
+      String updatedVersion = null;
+      String groupId = dependencyList.get(i).getGroupId();
+      String artifactId = dependencyList.get(i).getArtifactId();
 
-		// Parsing Method : Two
+      try {
+        updatedVersion = this.getLatestVersion(groupId, artifactId);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
 
-		try {
-			db = dbf.newDocumentBuilder();
-			InputSource is = new InputSource();
-			is.setCharacterStream(new StringReader(xmlData));
-			try {
+      dependencyList.get(i).setVersion(updatedVersion);
+    }
 
-				Document doc = db.parse(is);
-				String message = doc.getDocumentElement().getTextContent();
+    try {
+      new MavenXpp3Writer().write(writer, model);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
-				System.out.println("Way two : " + message);
+    return writer.toString();
+  }
 
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+  private String getLatestVersion(String groupid, String artifactid) {
 
-		} catch (ParserConfigurationException e) {
+    Document document = null;
+    String mavenRepositoryURL = null;
 
-		}
+    mavenRepositoryURL = this.generateMavenRepositoryURL(groupid, artifactid);
 
-		return xmlData;
-	}
+    try {
+      document = Jsoup.connect(mavenRepositoryURL).get();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
+    Element linkText = document.select("a[href].vbtn.release").first();
+
+    return linkText.html();
+  }
+
+  private String generateMavenRepositoryURL(String groupid, String artifactid) {
+
+    StringBuilder sbuilder = new StringBuilder();
+
+    sbuilder.append(Constants.BASE_URL);
+    sbuilder.append("/");
+    sbuilder.append(groupid);
+    sbuilder.append("/");
+    sbuilder.append(artifactid);
+
+    return sbuilder.toString();
+  }
 }

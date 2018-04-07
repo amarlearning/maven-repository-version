@@ -11,11 +11,10 @@ import me.amarpandey.service.IndexService;
 @RestController
 public class IndexController {
 
-	@Autowired
-	private IndexService indexService;
-	
-	@PostMapping(value = "/submitXML", consumes = MediaType.APPLICATION_XML_VALUE)
-	public String submitXML(@RequestBody String xmlData) {
-		return indexService.submitXML(xmlData);
-	}
+  @Autowired private IndexService indexService;
+
+  @PostMapping(value = "/submitXML", consumes = MediaType.APPLICATION_XML_VALUE)
+  public String submitXML(@RequestBody String xmlData) {
+    return indexService.submitXML(xmlData);
+  }
 }

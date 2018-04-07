@@ -8,6 +8,9 @@
 	editor.setTheme("ace/theme/monokai");
 	editor.session.setMode("ace/mode/xml");
 
+	$(".error-hide").hide();
+	$(".success-hide").hide();
+	
 	$("#submit").click(function(){
 		$.ajax({
 			url : "/submitXML",
@@ -16,7 +19,11 @@
 			contentType : "application/xml; charset=utf-8",
 			dataType : "xml",
 			success : function(data) {
-				editor.setValue("Hello World", -1)
+				$(".success-hide").show();
+				editor.setValue(new XMLSerializer().serializeToString(data));
+			},
+			error: function (error) {
+				$(".error-hide").show();
 			}
 		});
 	});

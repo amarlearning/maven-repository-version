@@ -43,3 +43,7 @@ code {
 .margin-top-10px {
 	margin-top: 10px;
 }
+
+.success-hide, .error-hide {
+	display: none;
+}
