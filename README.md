@@ -7,6 +7,9 @@
 
 > Now update the repository version of all maven dependency in just a click!
 
+## Demo
+[![Maven Repository Version](http://amarpandey.me/img/maven-version.png)](https://maven-repository-version.herokuapp.com/)
+
 ## Issues
 
 You can report the bugs at the [issue tracker](https://github.com/amarlearning/maven-repository-version/issues)
